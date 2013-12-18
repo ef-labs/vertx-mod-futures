@@ -1,0 +1,6 @@
+{
+    "description": "Provides utility methods to convert different types of futures to other types",
+    "licenses": ["The MIT License"],
+    "author": "Englishtown",
+    "keywords": ["futures", "promises"]
+}
