@@ -11,9 +11,17 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.impl.DefaultFutureResult;
 
 /**
+ * Utility class to convert between when.java promises, vert.x futures, and guava futures
  */
-public class ETFutures {
+public class FuturesUtil {
 
+    /**
+     * Convert a guava future to a when.java promise
+     *
+     * @param listenableFuture
+     * @param <T>
+     * @return
+     */
     public static <T> Promise<T, Void> convertToPromise(ListenableFuture<T> listenableFuture) {
         When<T, Void> when = new When<>();
         final Deferred<T, Void> d = when.defer();
@@ -33,6 +41,13 @@ public class ETFutures {
         return d.getPromise();
     }
 
+    /**
+     * Convert a vert.x future to a when.java promise
+     *
+     * @param vertxFuture
+     * @param <T>
+     * @return
+     */
     public static <T> Promise<T, Void> convertToPromise(Future<T> vertxFuture) {
         When<T, Void> when = new When<>();
         final Deferred<T, Void> d = when.defer();
@@ -51,6 +66,13 @@ public class ETFutures {
         return d.getPromise();
     }
 
+    /**
+     * Convert a guava future to a vert.x future
+     *
+     * @param listenableFuture
+     * @param <T>
+     * @return
+     */
     public static <T> Future<T> convertToVertxFuture(ListenableFuture<T> listenableFuture) {
         final DefaultFutureResult<T> defaultFutureResult = new DefaultFutureResult<>();
 
@@ -69,6 +91,14 @@ public class ETFutures {
         return defaultFutureResult;
     }
 
+    /**
+     * Convert a when.java promise to a vert.x future
+     *
+     * @param promise
+     * @param <T>
+     * @param <V>
+     * @return
+     */
     public static <T, V> Future<T> convertToVertxFuture(Promise<T, V> promise) {
         final DefaultFutureResult<T> defaultFutureResult = new DefaultFutureResult<>();
 
@@ -93,6 +123,13 @@ public class ETFutures {
         return defaultFutureResult;
     }
 
+    /**
+     * Convert a vert.x future to a guava future
+     *
+     * @param vertxFuture
+     * @param <T>
+     * @return
+     */
     public static <T> ListenableFuture<T> convertToGuavaFuture(Future<T> vertxFuture) {
         final VertxListenableFuture<T> vertxListenableFuture = new VertxListenableFuture<>();
 
@@ -110,6 +147,14 @@ public class ETFutures {
         return vertxListenableFuture;
     }
 
+    /**
+     * Convert a when.java promise to a guava future
+     *
+     * @param promise
+     * @param <T>
+     * @param <V>
+     * @return
+     */
     public static <T, V> ListenableFuture<T> convertToGuavaFuture(Promise<T, V> promise) {
         final VertxListenableFuture<T> vertxListenableFuture = new VertxListenableFuture<>();
 

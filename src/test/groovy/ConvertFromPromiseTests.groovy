@@ -1,4 +1,4 @@
-import com.englishtown.futures.ETFutures
+import com.englishtown.futures.FuturesUtil
 import com.englishtown.promises.Value
 import com.englishtown.promises.When
 import com.google.common.util.concurrent.FutureCallback
@@ -18,7 +18,7 @@ class ConvertFromPromiseTests extends Specification {
         def promise = d.promise
 
         when: "we convert that promise to a vertx future and complete the promise with a result of 18271"
-        def vertxFuture = ETFutures.convertToVertxFuture(promise)
+        def vertxFuture = FuturesUtil.convertToVertxFuture(promise)
         d.resolver.resolve(18271)
 
         then: "the vertx future should complete with the right result"
@@ -38,7 +38,7 @@ class ConvertFromPromiseTests extends Specification {
         def promise = d.promise
 
         when: "we convert that promise to a vertx future and complete the promise with a result of 18271"
-        def vertxFuture = ETFutures.convertToVertxFuture(promise)
+        def vertxFuture = FuturesUtil.convertToVertxFuture(promise)
         d.resolver.resolve(18271)
 
         then: "the vertx future should complete with the right result"
@@ -58,7 +58,7 @@ class ConvertFromPromiseTests extends Specification {
         def promise = d.promise
 
         when: "we convert that promise to a vertx future and then complete the promise with a failure"
-        def vertxFuture = ETFutures.convertToVertxFuture(promise)
+        def vertxFuture = FuturesUtil.convertToVertxFuture(promise)
         d.resolver.reject(new Value<Integer>(null, new RuntimeException("It's all gone horribly wrong.")))
 
         then: "the vertx future should complete with an error with the correct message"
@@ -79,7 +79,7 @@ class ConvertFromPromiseTests extends Specification {
         def promise = d.promise
 
         when: "we convert that promise to a guava future and then complete the promise with a value of 18271"
-        def guavaFuture = ETFutures.convertToGuavaFuture(promise)
+        def guavaFuture = FuturesUtil.convertToGuavaFuture(promise)
         d.resolver.resolve(18271)
 
         then: "the guava future, when wrapped in a callback, should callback with the correct value"
@@ -103,7 +103,7 @@ class ConvertFromPromiseTests extends Specification {
         def promise = d.promise
 
         when: "we convert that promise to a guava future and then fail the promise"
-        def guavaFuture = ETFutures.convertToGuavaFuture(promise)
+        def guavaFuture = FuturesUtil.convertToGuavaFuture(promise)
         d.resolver.reject(new Value<Integer>(null, new RuntimeException("It's all gone horribly wrong.")))
 
         then: "the guava future, when wrapped in a callback, should callback with the correct value"

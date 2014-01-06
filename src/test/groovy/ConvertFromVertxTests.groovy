@@ -1,4 +1,4 @@
-import com.englishtown.futures.ETFutures
+import com.englishtown.futures.FuturesUtil
 import com.englishtown.promises.Promise
 import com.englishtown.promises.Value
 import com.google.common.util.concurrent.FutureCallback
@@ -15,7 +15,7 @@ class ConvertFromVertxTests extends Specification {
         def vertxFuture = new DefaultFutureResult<Integer>()
 
         when: "we create a promise from that future and then complete the future"
-        def promise = ETFutures.convertToPromise(vertxFuture)
+        def promise = FuturesUtil.convertToPromise(vertxFuture)
         vertxFuture.setResult(18271)
 
         then: "our promise should complete with a value of 18271"
@@ -43,7 +43,7 @@ class ConvertFromVertxTests extends Specification {
         def vertxFuture = new DefaultFutureResult<Integer>()
 
         when: "we create a promise from that future and then fail the future"
-        def promise = ETFutures.convertToPromise(vertxFuture)
+        def promise = FuturesUtil.convertToPromise(vertxFuture)
         vertxFuture.setFailure(new Throwable("It's all gone horribly wrong."))
 
         then: "our promise should complete with a rejection with the right message"
@@ -71,7 +71,7 @@ class ConvertFromVertxTests extends Specification {
         def vertxFuture = new DefaultFutureResult<Integer>()
 
         when: "we create a listenable future from that vertx future and then complete the vertx future"
-        def listenableFuture = ETFutures.convertToGuavaFuture(vertxFuture)
+        def listenableFuture = FuturesUtil.convertToGuavaFuture(vertxFuture)
         vertxFuture.setResult(18271)
 
         then: "when we add a callback for the listenable future, it should receive a success result of 18271"
@@ -93,7 +93,7 @@ class ConvertFromVertxTests extends Specification {
         def vertxFuture = new DefaultFutureResult<Integer>()
 
         when: "we create a listenable future from that vertx future and then fail the vertx future"
-        def listenableFuture = ETFutures.convertToGuavaFuture(vertxFuture)
+        def listenableFuture = FuturesUtil.convertToGuavaFuture(vertxFuture)
         vertxFuture.setFailure(new Throwable("It's all gone horribly wrong."))
 
         then: "when we add a callback for the listenable future, it should receive a failed result with the right message"

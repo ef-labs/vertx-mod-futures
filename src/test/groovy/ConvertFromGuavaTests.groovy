@@ -1,4 +1,4 @@
-import com.englishtown.futures.ETFutures
+import com.englishtown.futures.FuturesUtil
 import com.englishtown.promises.Promise
 import com.englishtown.promises.Value
 import com.google.common.util.concurrent.MoreExecutors
@@ -23,7 +23,7 @@ class ConvertFromGuavaTests extends Specification {
         })
 
         when: "We convert that future to a promise"
-        def promise = ETFutures.convertToPromise(listenableFuture)
+        def promise = FuturesUtil.convertToPromise(listenableFuture)
 
         then: "the result of the promise should be 18271"
         promise.then(new com.englishtown.promises.Runnable<Promise<Integer, Void>, Integer>() {
@@ -46,7 +46,7 @@ class ConvertFromGuavaTests extends Specification {
         })
 
         when: "we convert that future to a promise"
-        def promise = ETFutures.convertToPromise(listenableFuture)
+        def promise = FuturesUtil.convertToPromise(listenableFuture)
 
         then: "we should go through the rejected promise method with the correct exception message"
         promise.then(
@@ -81,7 +81,7 @@ class ConvertFromGuavaTests extends Specification {
         AsyncResult<Integer> result
 
         when: "we convert that future to a vertx future and set a handler on that vertx future"
-        def vertxFuture = ETFutures.convertToVertxFuture(listenableFuture)
+        def vertxFuture = FuturesUtil.convertToVertxFuture(listenableFuture)
         vertxFuture.setHandler(new AsyncResultHandler<Integer>() {
             @Override
             void handle(AsyncResult<Integer> asyncResult) {
@@ -106,7 +106,7 @@ class ConvertFromGuavaTests extends Specification {
         AsyncResult<Integer> result
 
         when: "we convert that future to a vertx future and set a handler on that vertx future"
-        def vertxFuture = ETFutures.convertToVertxFuture(listenableFuture)
+        def vertxFuture = FuturesUtil.convertToVertxFuture(listenableFuture)
         vertxFuture.setHandler(new AsyncResultHandler<Integer>() {
             @Override
             void handle(AsyncResult<Integer> asyncResult) {
