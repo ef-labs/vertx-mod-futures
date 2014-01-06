@@ -1,12 +1,12 @@
 # vertx-mod-futures
 Provides helper methods for converting different types of futures/promises between each other. There are methods for converting to and from:
 
-* Englishtown Promises
+* When.java Promises
 * Vertx Futures
 * Guava Future Listeners
 
 # Usage
-This module provides a single class `ETFutures` that provides static methods to do the conversion. These are:
+This module provides a single class `FuturesUtil` that provides static methods to do the conversion. These are:
 
 ```
 Promise<T, Void> convertToPromise(ListenableFuture<T> listenableFuture)
