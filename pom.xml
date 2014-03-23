@@ -16,7 +16,7 @@
 
     <properties>
         <guava.version>15.0</guava.version>
-        <when.version>1.0.0</when.version>
+        <when.version>2.0.0-SNAPSHOT</when.version>
     </properties>
 
     <dependencies>

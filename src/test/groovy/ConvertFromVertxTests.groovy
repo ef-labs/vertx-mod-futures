@@ -22,15 +22,15 @@ class ConvertFromVertxTests extends Specification {
         promise.then(
                 new com.englishtown.promises.Runnable<Promise<Integer, Void>, Integer>() {
                     @Override
-                    Promise<Integer, Void> run(Integer value) {
+                    Promise<Integer> run(Integer value) {
                         assert value == 18271
 
                         return null
                     }
                 },
-                new com.englishtown.promises.Runnable<Promise<Integer, Void>, Value<Integer>>() {
+                new com.englishtown.promises.Runnable<Promise<Integer>, Value<Integer>>() {
                     @Override
-                    Promise<Integer, Void> run(Value<Integer> value) {
+                    Promise<Integer> run(Value<Integer> value) {
                         assert false
                         return null
                     }
@@ -50,15 +50,15 @@ class ConvertFromVertxTests extends Specification {
         promise.then(
                 new com.englishtown.promises.Runnable<Promise<Integer, Void>, Integer>() {
                     @Override
-                    Promise<Integer, Void> run(Integer value) {
+                    Promise<Integer> run(Integer value) {
                         assert false // We shouldn't be reaching here
                         return null
                     }
                 },
                 new com.englishtown.promises.Runnable<Promise<Integer, Void>, Value<Integer>>() {
                     @Override
-                    Promise<Integer, Void> run(Value<Integer> value) {
-                        assert value.error.message == "java.lang.Throwable: It's all gone horribly wrong."
+                    Promise<Integer> run(Value<Integer> value) {
+                        assert value.getCause().message == "java.lang.Throwable: It's all gone horribly wrong."
 
                         return null
                     }

@@ -22,9 +22,9 @@ public class FuturesUtil {
      * @param <T>
      * @return
      */
-    public static <T> Promise<T, Void> convertToPromise(ListenableFuture<T> listenableFuture) {
-        When<T, Void> when = new When<>();
-        final Deferred<T, Void> d = when.defer();
+    public static <T> Promise<T> convertToPromise(ListenableFuture<T> listenableFuture) {
+        When<T> when = new When<>();
+        final Deferred<T> d = when.defer();
 
         Futures.addCallback(listenableFuture, new FutureCallback<T>() {
             @Override
@@ -48,9 +48,9 @@ public class FuturesUtil {
      * @param <T>
      * @return
      */
-    public static <T> Promise<T, Void> convertToPromise(Future<T> vertxFuture) {
-        When<T, Void> when = new When<>();
-        final Deferred<T, Void> d = when.defer();
+    public static <T> Promise<T> convertToPromise(Future<T> vertxFuture) {
+        When<T> when = new When<>();
+        final Deferred<T> d = when.defer();
 
         vertxFuture.setHandler(new Handler<AsyncResult<T>>() {
             @Override
@@ -99,21 +99,21 @@ public class FuturesUtil {
      * @param <V>
      * @return
      */
-    public static <T, V> Future<T> convertToVertxFuture(Promise<T, V> promise) {
+    public static <T, V> Future<T> convertToVertxFuture(Promise<T> promise) {
         final DefaultFutureResult<T> defaultFutureResult = new DefaultFutureResult<>();
 
         promise.then(
-                new Runnable<Promise<T, V>, T>() {
+                new Runnable<Promise<T>, T>() {
                     @Override
-                    public Promise<T, V> run(T value) {
+                    public Promise<T> run(T value) {
                         defaultFutureResult.setResult(value);
 
                         return null;
                     }
-                }, new Runnable<Promise<T, V>, Value<T>>() {
+                }, new Runnable<Promise<T>, Value<T>>() {
                     @Override
-                    public Promise<T, V> run(Value<T> value) {
-                        defaultFutureResult.setFailure(value.error);
+                    public Promise<T> run(Value<T> value) {
+                        defaultFutureResult.setFailure(value.getCause());
 
                         return null;
                     }
@@ -155,21 +155,21 @@ public class FuturesUtil {
      * @param <V>
      * @return
      */
-    public static <T, V> ListenableFuture<T> convertToGuavaFuture(Promise<T, V> promise) {
+    public static <T, V> ListenableFuture<T> convertToGuavaFuture(Promise<T> promise) {
         final VertxListenableFuture<T> vertxListenableFuture = new VertxListenableFuture<>();
 
         promise.then(
-                new Runnable<Promise<T, V>, T>() {
+                new Runnable<Promise<T>, T>() {
                     @Override
-                    public Promise<T, V> run(T value) {
+                    public Promise<T> run(T value) {
                         vertxListenableFuture.set(value);
                         return null;
                     }
                 },
-                new Runnable<Promise<T, V>, Value<T>>() {
+                new Runnable<Promise<T>, Value<T>>() {
                     @Override
-                    public Promise<T, V> run(Value<T> value) {
-                        vertxListenableFuture.setException(value.error);
+                    public Promise<T> run(Value<T> value) {
+                        vertxListenableFuture.setException(value.getCause());
                         return null;
                     }
                 }
